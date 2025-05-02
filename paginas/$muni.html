@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Itens</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #e60000;
+      text-align: center;
+    }
+    label, select, input {
+      display: block;
+      margin-top: 15px;
+      width: 100%;
+    }
+    .resultado {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #e60000;
+      text-align: center;
+    }
+    .logo {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #e60000;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="../img/logo.png" alt="Logo" class="logo">
+    <h1>Calculadora de Itens</h1>
+
+    <label for="item">Escolha o item:</label>
+    <select id="item">
+      <option value="Mun Sniperrifle">Mun Sniperrifle </option>
+      <option value="Mun Specialcarbine_mk2 (G36)">Mun Specialcarbine_mk2 (G36) </option>
+      <option value="Mun Militaryrifle (Ram-7)">Mun Militaryrifle (Ram-7)</option>
+      <option value="Mun Carbinerifle_mk2 (Mpx)">Mun Carbinerifle_mk2 (Mpx) </option>
+      <option value="Mun Scarh">Mun Scarh </option>
+      <option value="Mun Assautsmg (Mtar-21)">Mun Assautsmg (Mtar-21) </option>
+      <option value="Mun Assaultrifle_mk2 (Ak-47)">Mun Assaultrifle_mk2 (Ak-47) </option>
+      <option value="Mun Mp9">Mun Mp9 </option>
+      <option value="Mun Machinepistol (Tec-9)">Mun Machinepistol (Tec-9)</option>
+      <option value="Mun Pistol .50">Mun Pistol .50</option>
+      <option value="Mun Fiven_Seven">Mun Fiven_Seven/option>
+    </select>
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" value="1" min="1">
+
+   <label style="text-align: center;">
+      <input type="checkbox" id="parceria"> Com parceria</label>
+
+    <div class="resultado" id="resultado">Total: R$ 0,00</div>
+  </div>
+
+  <script>
+    const itemSelect = document.getElementById('item');
+    const quantidadeInput = document.getElementById('quantidade');
+    const parceriaCheckbox = document.getElementById('parceria');
+    const resultadoDiv = document.getElementById('resultado');
+
+    const precos = {
+      "Mun Sniperrifle": { normal: 6800, parceria: 6600 },
+      "Mun Specialcarbine_mk2 (G36)": { normal: 6500, parceria: 6200 },
+      "Mun Militaryrifle (Ram-7)": { normal: 6400, parceria: 6100},
+      "Mun Carbinerifle_mk2 (Mpx)": { normal: 6200, parceria: 6000 },
+      "Mun Scarh": { normal: 5400, parceria: 5100 },
+      "Mun Assautsmg (Mtar-21)": { normal: 5200, parceria: 4800 },
+      "Mun Assaultrifle_mk2 (Ak-47)": { normal: 5000, parceria: 4800 },
+      "Mun Mp9": { normal: 4800, parceria: 4600 },
+      "Mun Machinepistol (Tec-9)": { normal: 3400, parceria: 3100 },
+      "Mun Pistol .50": { normal: 2100, parceria: 2000 },
+      "Mun Fiven_Seven": { normal: 2100, parceria: 2000 }
+    };
+
+    function calcularTotal() {
+      const item = itemSelect.value;
+      const quantidade = parseInt(quantidadeInput.value);
+      const parceria = parceriaCheckbox.checked;
+
+      if (isNaN(quantidade) || quantidade <= 0) {
+        resultadoDiv.textContent = "Total: R$ 0,00";
+        return;
+      }
+
+      const precoUnitario = parceria ? precos[item].parceria : precos[item].normal;
+      const precoFinal = precoUnitario * quantidade;
+      resultadoDiv.textContent = `Total: R$ ${precoFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    itemSelect.addEventListener('change', calcularTotal);
+    quantidadeInput.addEventListener('input', calcularTotal);
+    parceriaCheckbox.addEventListener('change', calcularTotal);
+
+    calcularTotal();
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Itens</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #e60000;
+      text-align: center;
+    }
+    label, select, input {
+      display: block;
+      margin-top: 15px;
+      width: 100%;
+    }
+    .resultado {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #e60000;
+      text-align: center;
+    }
+    .logo {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #e60000;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="../img/logo.png" alt="Logo" class="logo">
+    <h1>Calculadora de Itens</h1>
+
+    <label for="item">Escolha o item:</label>
+    <select id="item">
+      <option value="Mochila X">Mochila X </option>
+      <option value="C4">C4 </option>
+      <option value="Masterpick">Masterpick </option>
+      <option value="Laptop">Laptop</option>
+      <option value="Cnh roubada">Cnh roubada </option>
+      <option value="Carro ilegal">Carro ilegal </option>
+      <option value="Aliança">Aliança </option>
+      <option value="Maconha/cocainap venda">Maconha/cocaina p venda - </option>
+    </select>
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" value="1" min="1">
+
+   <label style="text-align: center;">
+      <input type="checkbox" id="parceria"> Com parceria</label>
+
+    <div class="resultado" id="resultado">Total: R$ 0,00</div>
+  </div>
+
+  <script>
+    const itemSelect = document.getElementById('item');
+    const quantidadeInput = document.getElementById('quantidade');
+    const parceriaCheckbox = document.getElementById('parceria');
+    const resultadoDiv = document.getElementById('resultado');
+
+    const precos = {
+      "Mochila X": { normal: 220000, parceria: 200000 },
+      "C4": { normal:  82000, parceria: 76000 },
+      "Masterpick": { normal: 100000, parceria: 95000 },
+      "Laptop": { normal:  110000, parceria:  90000 },
+      "Cnh roubada": { normal: 150000, parceria: 120000 },
+      "Carro ilegal": { normal: 10000000, parceria: 8000000 },
+      "Aliança": { normal: 250000, parceria: 200000 },
+      "Maconha/cocainap venda": { normal: 3500, parceria: 3100 }
+    };
+
+    function calcularTotal() {
+      const item = itemSelect.value;
+      const quantidade = parseInt(quantidadeInput.value);
+      const parceria = parceriaCheckbox.checked;
+
+      if (isNaN(quantidade) || quantidade <= 0) {
+        resultadoDiv.textContent = "Total: R$ 0,00";
+        return;
+      }
+
+      const precoUnitario = parceria ? precos[item].parceria : precos[item].normal;
+      const precoFinal = precoUnitario * quantidade;
+      resultadoDiv.textContent = `Total: R$ ${precoFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    itemSelect.addEventListener('change', calcularTotal);
+    quantidadeInput.addEventListener('input', calcularTotal);
+    parceriaCheckbox.addEventListener('change', calcularTotal);
+
+    calcularTotal();
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Itens</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #e60000;
+      text-align: center;
+    }
+    label, select, input {
+      display: block;
+      margin-top: 15px;
+      width: 100%;
+    }
+    .resultado {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #e60000;
+      text-align: center;
+    }
+    .logo {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #e60000;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="../img/logo.png" alt="Logo" class="logo">
+    <h1>Calculadora de Itens</h1>
+
+    <label for="item">Escolha o item:</label>
+    <select id="item">
+      <option value="Desmanche">Desmanche </option>
+      <option value="Lockpick">Lockpick </option>
+      <option value="Colete Premium">Colete Premium </option>
+      <option value="Placa">Placa </option>
+      <option value="Faca">Faca </option>
+      <option value="Kit Reparo2">Kit Reparo2</option>
+      <option value="Baú 500kg">Baú 500kg </option>
+      <option value="Baú 1000kg">Baú 1000kg </option>
+      <option value="Pé de Cabra">Pé de Cabra </option>
+    </select>
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" value="1" min="1">
+
+    <label style="text-align: center;">
+      <input type="checkbox" id="parceria"> Com parceria</label>
+
+    <div class="resultado" id="resultado">Total: R$ 0,00</div>
+  </div>
+
+  <script>
+  const itemSelect = document.getElementById('item');
+  const quantidadeInput = document.getElementById('quantidade');
+  const parceriaCheckbox = document.getElementById('parceria');
+  const resultadoDiv = document.getElementById('resultado');
+
+  const precos = {
+    "Desmanche": { normal: "60%", parceria: "40%" },
+    "Lockpick": { normal: 50000, parceria: 40000 },
+    "Colete Premium": { normal: 350000, parceria: 300000 },
+    "Placa": { normal: 75000, parceria: 55000 },
+    "Faca": { normal: 270000, parceria: 250000 },
+    "Kit Reparo2": { normal: 50000, parceria: 40000 },
+    "Baú 500kg": { normal: 12500000, parceria: 10000000 },
+    "Baú 1000kg": { normal: 23000000, parceria: 20000000 },
+    "Pé de Cabra": { normal: 350000, parceria: 300000 }
+  };
+
+  function calcularTotal() {
+    const item = itemSelect.value;
+    const quantidade = parseInt(quantidadeInput.value);
+    const parceria = parceriaCheckbox.checked;
+
+    if (isNaN(quantidade) || quantidade <= 0) {
+      resultadoDiv.textContent = "Total: R$ 0,00";
+      return;
+    }
+
+    if (item === "Desmanche") {
+      const porcentagem = parceria ? precos[item].parceria : precos[item].normal;
+      resultadoDiv.textContent = `Porcentagem: ${porcentagem}`;
+    } else {
+      const precoUnitario = parceria ? precos[item].parceria : precos[item].normal;
+      const precoFinal = precoUnitario * quantidade;
+      resultadoDiv.textContent = `Total: R$ ${precoFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+  }
+
+  itemSelect.addEventListener('change', calcularTotal);
+  quantidadeInput.addEventListener('input', calcularTotal);
+  parceriaCheckbox.addEventListener('change', calcularTotal);
+
+  calcularTotal();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Itens</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #e60000;
+      text-align: center;
+    }
+    label, select, input {
+      display: block;
+      margin-top: 15px;
+      width: 100%;
+    }
+    .resultado {
+      margin-top: 30px;
+      font-size: 1.5em;
+      color: #e60000;
+      text-align: center;
+    }
+    .logo {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #e60000;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="../img/logo.png" alt="Logo" class="logo">
+    <h1>Calculadora de Itens</h1>
+
+    <label for="item">Escolha o item:</label>
+    <select id="item">
+      <option value="Lavagem">Lavagem</option>
+      <option value="Colete">Colete</option>
+      <option value="Adrenalina">Adrenalina</option>
+      <option value="Capuz">Capuz</option>
+      <option value="Algema">Algema</option>
+      <option value="Sala personalizada">Sala personalizada</option>
+      <option value="Carro de som">Carro de som</option>
+      <option value="Blacklist">Blacklist</option>
+      <option value="Colete Premiun">Colete Premiun</option>
+      <option value="Kit sequestro">Kit sequestro</option>
+    </select>
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidade" value="1" min="1">
+
+    <label style="text-align: center;">
+      <input type="checkbox" id="parceria"> Com parceria</label>
+
+    <div class="resultado" id="resultado">Total: R$ 0,00</div>
+  </div>
+
+  <script>
+    const itemSelect = document.getElementById('item');
+    const quantidadeInput = document.getElementById('quantidade');
+    const parceriaCheckbox = document.getElementById('parceria');
+    const resultadoDiv = document.getElementById('resultado');
+
+    const precos = {
+      "Lavagem": { normal: 0.5, parceria: 0.3 }, // como porcentagem (50% = 0.5)
+      "Colete": { normal: 200000, parceria: 180000 },
+      "Adrenalina": { normal: 105000, parceria: 95000 },
+      "Capuz": { normal: 7000, parceria: 6000 },
+      "Algema": { normal: 25000, parceria: 15000 },
+      "Sala personalizada": { normal: 70000, parceria: 60000 },
+      "Carro de som": { normal: 10000000, parceria: 9000000 },
+      "Blacklist": { normal: 1500000, parceria: 700000 },
+      "Colete Premiun": { normal: 350000, parceria: 300000 },
+      "Kit sequestro": { normal: 60000, parceria: 54000 }
+    };
+
+    function calcularTotal() {
+      const item = itemSelect.value;
+      const quantidade = parseInt(quantidadeInput.value);
+      const parceria = parceriaCheckbox.checked;
+
+      if (isNaN(quantidade) || quantidade <= 0) {
+        resultadoDiv.textContent = "Total: R$ 0,00";
+        return;
+      }
+
+      const precoUnitario = precos[item][parceria ? 'parceria' : 'normal'];
+
+      if (item === "Lavagem") {
+        const porcentagem = precoUnitario * 100;
+        resultadoDiv.textContent = `Percentual de lavagem: ${porcentagem}%`;
+      } else {
+        const precoFinal = precoUnitario * quantidade;
+        resultadoDiv.textContent = `Total: R$ ${precoFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
+    }
+
+    itemSelect.addEventListener('change', calcularTotal);
+    quantidadeInput.addEventListener('input', calcularTotal);
+    parceriaCheckbox.addEventListener('change', calcularTotal);
+
+    calcularTotal();
+  </script>
+</body>
+</html>

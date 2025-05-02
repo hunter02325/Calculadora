@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Itens</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .logo {
+      width: 150px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      background-color: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #e60000;
+      text-align: center;
+    }
+    .opcoes {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .botao {
+      background-color: #e60000;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .botao:hover {
+      background-color: #ff1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="img/logo.png" alt="Logo" class="logo">
+    <div class="opcoes">
+      <a href="paginas/$arma.html" class="botao">Armas</a>
+      <a href="paginas/$muni.html" class="botao">Munição</a>
+      <a href="paginas/$drogas.html" class="botao">Droga</a>
+      <a href="paginas/$lavagem.html" class="botao">Lavagem</a>
+      <a href="paginas/$desmanche.html" class="botao">Desmanche</a>
+      <a href="paginas/$contrabando.html" class="botao">Contrabando</a>
+    </div>
+  </div>
+</body>
+</html>
